@@ -1,9 +1,28 @@
-// base
-@import 'base/variables';
+// Overrides
+.portfolio__container {
+  width: 450px;
+}
 
-// foundation
-@import 'base/foundation-settings';
-@import 'foundation';
-@include foundation-everything;
+// Game Board
+.gameBoard {
+  border: 2px solid #ccc;
+  background: #f2f2f2;
+  border-radius: 4px;
+}
 
-// components
+.gameBoard__row {
+  display: block;
+  height: 4px;
+  line-height: 4px;
+  font-size: 0;
+}
+
+.gameBoard__cell {
+  display: inline-block;
+  height: 4px;
+  width: 4px;
+}
+
+.gameBoard__cell--alive {
+  background: pink;
+}

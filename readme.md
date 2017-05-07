@@ -1,1 +1,1 @@
-React Timer App
+React Conway's 'Game of Life' App
