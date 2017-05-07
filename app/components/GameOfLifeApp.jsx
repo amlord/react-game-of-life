@@ -1,23 +1,87 @@
 var React = require('react');
 
 var GameBoard = require('GameBoard');
+var GameControls = require('GameControls');
 var GameOfLifeEngine = require('GameOfLifeEngine');
 
 // Game of Life App
 var GameOfLifeApp = React.createClass({
     getInitialState: function()
     {
-        // create an array, 100 x 100, with only dead squares
-        var emptySquares = new Array(100).fill(false).map(()=>new Array(100).fill(false));
-      
         return {
-          squares: GameOfLifeEngine.generateInitialBoard()
+          squares: GameOfLifeEngine.generateInitialBoard(),
+          gameStatus: 'stopped',
+          generations: 0
         };
+    },
+    componentDidMount: function()
+    {
+        // start the game straight away
+        this.setState({
+            gameStatus: 'started'
+        });
+    },
+    componentDidUpdate: function(prevProps, prevState)
+    {
+        if(this.state.gameStatus !== prevState.gameStatus)
+        {
+            switch(this.state.gameStatus)
+            {
+                case 'started':
+                    this.startTimer();
+                    break;
+                case 'stopped':
+                    this.setState({
+                        generations: 0,
+                        countdownStatus: 'paused',
+                        squares: GameOfLifeEngine.generateClearBoard()
+                    });
+                case 'paused':
+                    clearInterval(this.timer);
+                    this.timer = undefined;
+                    break;
+            }
+        }
+    },
+    startTimer: function()
+    {
+        this.timer = setInterval(() =>
+        {
+            var {generations} = this.state;
+            var updatedSquares = GameOfLifeEngine.getNextGeneration(this.state.squares)
+
+            this.setState({
+                generations: ++generations,
+                squares: updatedSquares
+            });
+        }, 500);
+    },
+    handlePause: function()
+    {
+        // start the game straight away
+        this.setState({
+            gameStatus: 'paused'
+        });
+    },
+    handleStart: function()
+    {
+        // start the game straight away
+        this.setState({
+            gameStatus: 'started'
+        });
+    },
+    handleClear: function()
+    {
+        // start the game straight away
+        this.setState({
+            gameStatus: 'stopped'
+        });
     },
     render: function()
     {
         return (
             <div>
+                <GameControls onStart={this.handleStart} onPause={this.handlePause} onClear={this.handleClear} generations={this.state.generations}/>
                 <GameBoard squares={this.state.squares} />
             </div>
         );
