@@ -4,12 +4,15 @@ var GameBoard = require('GameBoard');
 var GameControls = require('GameControls');
 var GameOfLifeEngine = require('GameOfLifeEngine');
 
+var sizeX = 80;
+var sizeY = 80;
+
 // Game of Life App
 var GameOfLifeApp = React.createClass({
     getInitialState: function()
     {
         return {
-          squares: GameOfLifeEngine.generateInitialBoard(),
+          squares: GameOfLifeEngine.generateInitialBoard(sizeX, sizeY),
           gameStatus: 'stopped',
           generations: 0
         };
@@ -34,7 +37,7 @@ var GameOfLifeApp = React.createClass({
                     this.setState({
                         generations: 0,
                         countdownStatus: 'paused',
-                        squares: GameOfLifeEngine.generateClearBoard()
+                        squares: GameOfLifeEngine.generateClearBoard(sizeX, sizeY)
                     });
                 case 'paused':
                     clearInterval(this.timer);
@@ -81,7 +84,11 @@ var GameOfLifeApp = React.createClass({
     {
         return (
             <div>
-                <GameControls onStart={this.handleStart} onPause={this.handlePause} onClear={this.handleClear} generations={this.state.generations}/>
+                <GameControls
+                    onStart={this.handleStart}
+                    onPause={this.handlePause}
+                    onClear={this.handleClear}
+                    generations={this.state.generations}/>
                 <GameBoard squares={this.state.squares} />
             </div>
         );

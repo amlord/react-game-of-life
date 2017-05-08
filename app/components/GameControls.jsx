@@ -18,10 +18,10 @@ var GameControls = React.createClass({
     {
         return (
             <div className="gameControls">
-                <button onClick={this.handleRun}>Run</button>
-                <button onClick={this.handlePause}>Pause</button>
-                <button onClick={this.handleClear}>Clear</button>
-                <span>Generation: <strong>{this.props.generations}</strong></span>
+                <button className="btn gameControls__btn" onClick={this.handleRun}>Run</button>
+                <button className="btn gameControls__btn" onClick={this.handlePause}>Pause</button>
+                <button className="btn gameControls__btn" onClick={this.handleClear}>Clear</button>
+                <span className="gameControls__generations">Generation: <strong>{this.props.generations}</strong></span>
             </div>
         );
     }

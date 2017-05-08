@@ -1,3 +1,5 @@
+$cellSize: 5px;
+
 // Overrides
 .portfolio__container {
   width: 450px;
@@ -13,17 +15,37 @@
 
 .gameBoard__row {
   display: block;
-  height: 4px;
-  line-height: 4px;
+  height: $cellSize;
+  line-height: $cellSize;
   font-size: 0;
 }
 
 .gameBoard__cell {
   display: inline-block;
-  height: 4px;
-  width: 4px;
+  height: $cellSize;
+  width: $cellSize;
+  border: 1px solid #ececed;
+  box-sizing: border-box;
 }
 
 .gameBoard__cell--alive {
-  background: pink;
+  background: #29bf12;
+  border-color: #29bf12;
+}
+
+// Board Controls
+.gameControls {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.gameControls__btn {
+  padding: 7px 12px;
+  font-size: 14px;
+  line-height: 1em;
+  margin-right: 14px;
+}
+
+.gameControls__generations {
+  float: right;
 }

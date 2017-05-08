@@ -32,9 +32,9 @@ module.exports = {
         });
     });
   },
-  generateInitialBoard: function()
+  generateInitialBoard: function(sizeX, sizeY)
   {
-    var emptyBoard = _getEmptyBoard();
+    var emptyBoard = _getEmptyBoard(sizeX, sizeY);
     
     return emptyBoard.map((row, y) => {
         return row.map((cell, x) => {
@@ -42,38 +42,38 @@ module.exports = {
         });
     });
   },
-  generateClearBoard: function()
+  generateClearBoard: function(sizeX, sizeY)
   {
-    return _getEmptyBoard();
+    return _getEmptyBoard(sizeX, sizeY);
   }
 };
 
 // private functions
-function _getEmptyBoard()
+function _getEmptyBoard(sizeX, sizeY)
 {
-    return new Array(100).fill(false).map(()=>new Array(100).fill(false));
+    return new Array(sizeY).fill(false).map(()=>new Array(sizeX).fill(false));
 }
 
 function _calcNeighbours(currentGen, x, y)
 {
     // start with -1 if the cell is alive
-    var neighbours = (currentGen[x][y] ? -1 : 0);
+    var neighbours = (currentGen[y][x] ? -1 : 0);
 
     // loop through 9 cells, where x,y is at the centre
     for(var i = -1; i <= 1; i++)
     {
         for(var j = -1; j <= 1; j++)
         {
-        try{
-            // check for a live cell
-            if(currentGen[x+i][y+j] === true)
-            {
-                neighbours++;
+            try{
+                // check for a live cell
+                if(currentGen[y+j][x+i] === true)
+                {
+                    neighbours++;
+                }
             }
-        }
-        catch(e){
-            // cell out-of-bounds
-        }
+            catch(e){
+                // cell out-of-bounds
+            }
         }
     }
 
