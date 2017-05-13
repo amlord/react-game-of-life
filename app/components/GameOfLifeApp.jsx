@@ -77,8 +77,24 @@ var GameOfLifeApp = React.createClass({
     {
         // start the game straight away
         this.setState({
-            gameStatus: 'stopped'
+            gameStatus: 'stopped',
+            squares: GameOfLifeEngine.generateClearBoard(sizeX, sizeY)
         });
+    },
+    handleSquareClick: function(x, y)
+    {
+        // only do something if the game is stopped
+        if(this.state.gameStatus === 'stopped')
+        {
+            var {squares} = this.state;
+
+            // swap the square state
+            squares[y][x] = !squares[y][x];
+
+            this.setState({
+                squares: squares
+            });
+        }
     },
     render: function()
     {
@@ -89,7 +105,9 @@ var GameOfLifeApp = React.createClass({
                     onPause={this.handlePause}
                     onClear={this.handleClear}
                     generations={this.state.generations}/>
-                <GameBoard squares={this.state.squares} />
+                <GameBoard
+                    squares={this.state.squares}
+                    onSquareClick={this.handleSquareClick} />
             </div>
         );
     }
